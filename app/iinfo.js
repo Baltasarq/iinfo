@@ -263,11 +263,21 @@ locBeforeLibrary.ini = function() {
 const objHook = ctrl.creaObj(
     "perchero",
     [ "percha" ],
-    "Del perchero cuelga un ${traje académico, ex traje} \
-     en su funda.",
+    "Perchero fijado a la pared.",
     locBeforeLibrary,
     Ent.Scenery
 );
+
+objHook.preExamine = function() {
+    const player = ctrl.personas.getPlayer();
+    let toret = this.desc;
+
+    if ( !player.has( objSuit ) ) {
+        toret += " De él cuelga un ${traje académico, coge traje}.";
+    }
+
+    return toret;
+};
 
 const objSuit = ctrl.creaObj(
     "traje académico",
@@ -275,11 +285,15 @@ const objSuit = ctrl.creaObj(
     "Es una túnica dorada, con casco de flequillo a juego. \
      Resumiendo, quien se lo pone, parece una mesa-camilla.",
     locBeforeLibrary,
-    Ent.Scenery
+    Ent.Portable
 );
 
 objSuit.preWear = function() {
     return "No, ni hablar. Lo dicho, pareces una mesa-camilla.";
+};
+
+objSuit.preStart = function() {
+    return "Mmm... ¿Quemarlo? Tentador..."
 };
 
 const objTechBooks = ctrl.creaObj(
