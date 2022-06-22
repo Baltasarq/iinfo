@@ -2,7 +2,7 @@
 
 El equivalente a un página web personal, pero en formato interactivo.
 
-Ha sido escrito mediante [fi.js](http://io.github.com/baltasarq/iinfo).
+Ha sido escrito mediante [fi.js](http://github.com/baltasarq/fi-js).
 
-[Motor fi.js](http://io.github.com/baltasarq/iinfo).
+[Motor fi.js](http://github.com/baltasarq/fi-js).
 [Leer](http://io.github.com/baltasarq/iinfo).
