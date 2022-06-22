@@ -1,0 +1,31 @@
+! iInfo
+Frente a la mesa
+A tu alrededor puedes ver los habituales muebles de un despacho de la ESEI, destacando una mesa con su correspondiente silla, un ordenador con teclado, monitor e impresora, dos estanterías pegadas contra la pared contraria a la mesa, y dos pizarras.
+La puerta de entrada se sitúa frente al ventanal que permite ver el patio central del edificio, del que en realidad solo puede abrirse una ventana. Muy cerca de ella, un archivador y la mesa, silla e impresora de la otra ocupante de la oficina.
+
+> ex mesa
+La mesa de trabajo, mantenida tan despejada como sea posible. Sobre ella hay unos libros, y en un extremo, una placa.
+
+> ex placa
+En ella se lee: "Baltasar García Perez-Schofield"
+
+> ex libros
+Varios libros de relatos en un pequeño montón. ~~URL a amazon~~.
+
+> ex silla
+La típica silla de oficina con ruedas en las patas. Típica pero también muy cómoda.
+
+> ex ordenador
+Desde aquí se puede acceder a varios proyectos. ~~URL a Github~~.
+
+> ex teclado
+En realidad, ya estás interactuando con un ordenador ahora mismo. Si utilizaras este ordenador dentro de esta historia, sería una meta interacción... o una meta-meta interacción... ¿no? ...puff... Créeme, eso es peor que ir más allá de una doble indirección de punteros.
+
+> n
+Frente a la estanteria
+En la estantería puedes ver una Tesis Doctoral, la documentación de una plaza, y varios libros técnicos.
+
+> ex libros tech
+Libros escritos sobre diferentes lenguajes de programación aplicados a varios aspectos del desarrollo informático. ~~URL~~
+
+
