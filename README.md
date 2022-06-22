@@ -5,4 +5,5 @@ El equivalente a un página web personal, pero en formato interactivo.
 Ha sido escrito mediante [fi.js](http://github.com/baltasarq/fi-js).
 
 [Motor fi.js](http://github.com/baltasarq/fi-js).
-[Leer](http://io.github.com/baltasarq/iinfo).
+
+[Leer](http://baltasarq.io.github.com/iinfo).
