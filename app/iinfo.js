@@ -5,6 +5,9 @@
 */
 
 // -------------------------------------------------- ctrl.creaExtLink
+const PHONE_NUMBER = "988368891";
+const EMAILS = "baltasarq@uvigo.es y baltasarq@gmail.com";
+
 const URL_INFO = {
     "ESEI": {
         "URL": "http://esei.uvigo.es/",
@@ -13,6 +16,10 @@ const URL_INFO = {
     "PERSONAL": {
         "URL": "http://baltasarq.info/",
         "DESC": "Web personal"
+    },
+    "CAAD": {
+        "URL": "http://caad.es/baltasarq/",
+        "DESC": "Web de relatos interactivos"
     },
     "PROFESIONAL": {
         "URL": "http://jbgarcia.webs.uvigo.es/",
@@ -56,6 +63,7 @@ const locBeforeTable = ctrl.places.creaLoc(
      de un despacho de la ${ESEI, ex esei}, \
      destacando una ${mesa, ex mesa} \
      con su correspondiente ${silla, ex silla}, \
+     ${teléfono, ex telefono}, \
      un ordenador con ${teclado, ex teclado}, \
      ${monitor, ex monitor} e ${impresora, ex impresora}, \
      dos ${estanterías, n} pegadas contra la pared contraria a la mesa, \
@@ -86,7 +94,23 @@ objDoor.preOpen = function() {
             edificio. Quien sabe, quizás próximamente.";
 };
 
-const objPuesto = ctrl.creaObj(
+const objPhone = ctrl.creaObj(
+    "teléfono",
+    [ "telefono" ],
+    "El teléfono tiene una pequeña etiqueta con el número: " + PHONE_NUMBER,
+    locBeforeTable,
+    Ent.Scenery
+);
+
+objPhone.prePush = function() {
+    return "Cae al suelo. Lo vuelves a colocar.";
+};
+
+objPhone.preOpen = function() {
+    return "Hay línea.<br/>[Déjalo, no se puede llamar.]"
+};
+
+const objOtherPost = ctrl.creaObj(
     "puesto",
     [ "otro" ],
     "El puesto de la otra persona que ocupa este despacho. \
@@ -107,13 +131,53 @@ const objESEI = ctrl.creaObj(
 
 const objTable = ctrl.creaObj(
     "mesa",
-    [],
-    "La mesa de trabajo, mantenida tan despejada como es posible. \
+    [ "cajones", "cajon", "cajonera" ],
+    "La mesa de trabajo, mantenida tan despejada como es posible, \
+     con una pequeña cajonera bajo ella. \
      Sobre ella hay ${unos libros, ex libros}, \
      también ${unos folios, ex folios}, \
      y en un extremo, ${una placa, ex placa}.",
     locBeforeTable,
     Ent.Scenery
+);
+
+objTable.ini = function() {
+    objTable.setCloseable();
+    this.setOpen( false );
+};
+
+objTable.preExamine = function() {
+    let toret = this.desc;
+
+    if ( this.isOpen()
+      && ctrl.places.limbo.has( objCard ) )
+    {
+        toret += " Dentro de uno de los cajones abiertos hay \
+                   ${una tarjeta, coge tarjeta}.";
+    }
+
+    return toret;
+};
+
+objTable.preOpen = function() {
+    this.setOpen();
+    objCard.moveTo( this.owner );
+    return "En los cajones encuentras \
+            una ${tarjeta de visita, coge tarjeta}.";
+};
+
+const objCard = ctrl.creaObj(
+    "tarjeta",
+    [ "tarjeta", "visita" ],
+    `En ella se puede leer lo siguiente: \
+     <br/>Baltasar García Perez-Schofield\
+     <br/>Tlf.: ${PHONE_NUMBER}\
+     <br/>${EMAILS}\
+     <br/>${ctrl.creaExtLink(URL_INFO.PROFESIONAL)}\
+     <br/>${ctrl.creaExtLink(URL_INFO.PROFESIONAL_UVIGO)}\
+     <br/>${ctrl.creaExtLink(URL_INFO.PERSONAL)}`,
+    ctrl.places.limbo,
+    Ent.Portable
 );
 
 const objSheets = ctrl.creaObj(
@@ -123,7 +187,7 @@ const objSheets = ctrl.creaObj(
      + ctrl.creaExtLink( URL_INFO.PROFESIONAL ),
     locBeforeTable,
     Ent.Scenery
-)
+);
 
 const objStories = ctrl.creaObj(
     "libros",
@@ -138,7 +202,9 @@ const objComputer = ctrl.creaObj(
     "ordenador",
     [ "pantalla", "monitor" ],
     "Hay varios proyectos en pantalla: "
-     + ctrl.creaExtLink( URL_INFO.PRYS ),
+     + ctrl.creaExtLink( URL_INFO.PRYS )
+     + "<br/>y también relatos interactivos: "
+     + ctrl.creaExtLink( URL_INFO.CAAD ),
     locBeforeTable,
     Ent.Scenery
 );
@@ -269,10 +335,10 @@ const objHook = ctrl.creaObj(
 );
 
 objHook.preExamine = function() {
-    const player = ctrl.personas.getPlayer();
     let toret = this.desc;
 
-    if ( !player.has( objSuit ) ) {
+    if ( ctrl.places.limbo.has( objSuit ) ) {
+        objSuit.moveTo( this.owner );
         toret += " De él cuelga un ${traje académico, coge traje}.";
     }
 
@@ -284,7 +350,7 @@ const objSuit = ctrl.creaObj(
     [ "traje" ],
     "Es una túnica dorada, con casco de flequillo a juego. \
      Resumiendo, quien se lo pone, parece una mesa-camilla.",
-    locBeforeLibrary,
+    ctrl.places.limbo,
     Ent.Portable
 );
 
